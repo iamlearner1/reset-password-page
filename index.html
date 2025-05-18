@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Reset Password - FarmTrade</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+  <h2>Reset Your Password</h2>
+  <input type="password" id="newPassword" placeholder="Enter New Password" required />
+  <button onclick="resetPassword()">Submit</button>
+
+  <script>
+    function getTokenFromURL() {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get("token");
+    }
+
+    async function resetPassword() {
+      const token = getTokenFromURL();
+      const newPassword = document.getElementById("newPassword").value;
+
+      if (!token || !newPassword) {
+        alert("Missing token or password");
+        return;
+      }
+
+      try {
+        const response = await fetch("https://your-api-url.com/api/users/reset-password", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ token, newPassword }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          alert("Password reset successful!");
+        } else {
+          alert("Error: " + data.error);
+        }
+      } catch (err) {
+        alert("Something went wrong!");
+        console.error(err);
+      }
+    }
+  </script>
+</body>
+</html>
