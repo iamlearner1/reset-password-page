@@ -1,14 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Reset Password - FarmTrade</title>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reset Password - FarmTrade</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #F0FFF4;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border: 2px solid #FFECCF;
+      padding: 30px 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 200px;
+      max-width: 100%;
+      margin-bottom: 0;
+    }
+
+    h2 {
+      margin-top: 10px;
+      margin-bottom: 20px;
+      color: #2D6A4F;
+      font-size: 24px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #FFA500;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #e69500;
+    }
+
+    .success {
+      background-color: #F0FFF4;
+      color: #2D6A4F;
+      padding: 20px;
+      border-radius: 8px;
+      font-size: 18px;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 20px 15px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      .logo {
+        width: 150px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h2>Reset Your Password</h2>
-  <input type="password" id="newPassword" placeholder="Enter New Password" required />
-  <button onclick="resetPassword()">Submit</button>
+  <div class="container" id="resetContainer">
+    <img src="logo.png" alt="FarmTrade Logo" class="logo" />
+    <h2>Reset Your Password</h2>
+    <input type="password" id="newPassword" placeholder="Enter New Password" required />
+    <button onclick="resetPassword()">Submit</button>
+  </div>
 
   <script>
     function getTokenFromURL() {
@@ -35,7 +125,12 @@
         const data = await response.json();
 
         if (response.ok) {
-          alert("Password reset successful!");
+          document.getElementById("resetContainer").innerHTML = `
+            <div class="success">
+              <h2>Password Reset Successful!</h2>
+              <p>You can now log in using your new password.</p>
+            </div>
+          `;
         } else {
           alert("Error: " + data.error);
         }
